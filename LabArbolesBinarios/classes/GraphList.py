@@ -1,7 +1,8 @@
-import graphviz as gv
 from typing import List, Any, Optional
 import os
 from PIL import Image
+
+import graphviz as gv
 
 class GraphList:
     def __init__(self) -> None:
@@ -21,7 +22,7 @@ class GraphList:
         return True
     
     def search_image(self,name_file: str) -> str:
-        carpeta = 'LabArbolesBinarios/Data'
+        carpeta = 'assets/Data'
         directorio_actual = os.path.abspath(carpeta)
         for imagenes in os.listdir(carpeta):
             path = os.path.join(directorio_actual, imagenes)

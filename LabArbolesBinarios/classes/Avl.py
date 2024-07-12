@@ -1,8 +1,10 @@
-from Node import Node
 from typing import List, Optional, Any
-from GraphList import GraphList
 
-class Avl():
+from LabArbolesBinarios.classes.Node import Node
+from LabArbolesBinarios.classes.GraphList import GraphList
+
+
+class Avl:
     def __init__(self, root: 'Node') -> None:
         self.__root = root
         self.__list_ady: Optional['GraphList'] = [[]]
@@ -58,6 +60,55 @@ class Avl():
             self.rebalance()
             self.set_list_ady()
             return True
+    
+    # Functions for delete 
+    def pred(self, node: 'Node'): # Predecesor (Node with the greatest value less than the node)
+        p, pad = node.get_left(), node
+        while p.get_right() is not None:
+            pad = p
+            p = p.get_right()
+        return p, pad
+    
+    def delete(self, data: 'str') -> bool: # Delete a node from the tree
+        p, pad = self.search(data)
+        if p is not None:
+            if p.get_left() is None and p.get_right() is None:
+                if p == pad.get_left():
+                    pad.set_left(None)
+                else:
+                    pad.set_right(None)
+
+            elif p.get_left() is not None and p.get_right() is None:
+                if pad != None:
+                    if p == pad.get_left():
+                        pad.set_left(p.get_left())
+                    else:
+                        pad.set_right(p.get_left())
+            
+            elif p.get_left() == None and p.get_right() != None:
+                if p == pad.get_left():
+                    pad.set_left(p.get_right())
+                else:
+                    pad.set_right(p.get_right())
+            else:
+                pred, pad_pred = self.pred(p)
+                p.set_data(pred.get_data())
+                if pred.get_left() is not None:
+                    if pad_pred == p:
+                        pad_pred.set_left(pred.get_left())
+                    else:
+                        pad_pred.set_right(pred.get_left())
+                else:
+                    if pad_pred == p:
+                        pad_pred.set_left(None)
+                    else:
+                        pad_pred.set_right(None)
+                del pred
+            self.rebalance()
+            self.set_list_ady()
+            return True
+        return False
+
     
     def get_list_ady(self) -> 'GraphList':
         return self.__list_ady
@@ -131,55 +182,6 @@ class Avl():
                 cont += 1
         return cont
 
-    # Functions for delete 
-    def pred(self, node: 'Node'): # Predecesor (Node with the greatest value less than the node)
-        p, pad = node.get_left(), node
-        while p.get_right() is not None:
-            pad = p
-            p = p.get_right()
-        return p, pad
-    
-    def delete(self, data: 'str') -> bool: # Delete a node from the tree
-        p, pad = self.search(data)
-        if p is not None:
-            if p.get_left() is None and p.get_right() is None:
-                if p == pad.get_left():
-                    pad.set_left(None)
-                else:
-                    pad.set_right(None)
-
-            elif p.get_left() is not None and p.get_right() is None:
-                if pad != None:
-                    if p == pad.get_left():
-                        pad.set_left(p.get_left())
-                    else:
-                        pad.set_right(p.get_left())
-            
-            elif p.get_left() == None and p.get_right() != None:
-                if p == pad.get_left():
-                    pad.set_left(p.get_right())
-                else:
-                    pad.set_right(p.get_right())
-            else:
-                pred, pad_pred = self.pred(p)
-                p.set_data(pred.get_data())
-                if pred.get_left() is not None:
-                    if pad_pred == p:
-                        pad_pred.set_left(pred.get_left())
-                    else:
-                        pad_pred.set_right(pred.get_left())
-                else:
-                    if pad_pred == p:
-                        pad_pred.set_left(None)
-                    else:
-                        pad_pred.set_right(None)
-                del pred
-            self.rebalance()
-            self.set_list_ady()
-            return True
-        return False
-
-
     # ROTATIONS AND REBALANCE FUNCTIONS
     def get_balance(self, elem: str) -> Optional[int]: # Balance Factor of a node (Height of the right subtree - Height of the left subtree)
         node, pad = self.search(elem)
@@ -250,34 +252,35 @@ class Avl():
                 pass
 
 
-T = Avl(Node('0001'))
-T.insert('carsgraz_001')
-T.insert('horse-17')
-T.insert('horse-18')
-T.insert('rider-8')
-T.insert('rider-20')
-T.insert('cat.8')
-T.insert('dog.27')
-T.insert('dog.29')
-T.insert('dog.120')
-T.insert('0210')
-T.insert('bike_024')
-T.insert('bike_180')
-T.insert('cargraz_164')
-T.insert('cat.154')
-T.insert('horse-33')
-T.insert('horse-40')
-T.insert('rider-44')
-T.insert('rider-197')
-print(T.get_list_ady().get_list_ady())
-print()
+# T = Avl(Node('0001'))
+# T.insert('carsgraz_001')
+# T.insert('horse-17')
+# T.insert('horse-18')
+# T.insert('rider-8')
+# T.insert('rider-20')
+# T.insert('cat.8')
+# T.insert('dog.27')
+# T.insert('dog.29')
+# T.insert('dog.120')
+# T.insert('0210')
+# T.insert('bike_024')
+# T.insert('bike_180')
+# T.insert('cargraz_164')
+# T.insert('cat.154')
+# T.insert('horse-33')
+# T.insert('horse-40')
+# T.insert('rider-44')
+# T.insert('rider-197')
+# print(T.get_list_ady().get_list_ady())
+# print()
 
-print(T.levels_nr())
-lista = []
-T.list_level(T.get_root(), 3, lista)
-print(lista)
-print()
-print(T.get_list_ady().search_image('rider-44'))
+# print(T.levels_nr())
+# lista = []
+# T.list_level(T.get_root(), 3, lista)
+# print(lista)
+# print()
+# print(T.get_list_ady().search_image('rider-44'))
 
-T.get_list_ady().plot(T.levels_nr()).render('LabArbolesBinarios/assets/img/tree_avl/image_avl', format='png', view=True, cleanup=True)
+# T.get_list_ady().plot(T.levels_nr()).render('assets/img/tree_avl/image_avl', format='png', view=True, cleanup=True)
 # Plot the tree and save it as an image file in the assets/img/tree_avl folder of the project directory (LabArbolesBinarios)
+

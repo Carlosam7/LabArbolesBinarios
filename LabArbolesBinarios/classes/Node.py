@@ -1,6 +1,8 @@
 from typing import Optional, Any
-from GraphList import GraphList
 import os
+
+from LabArbolesBinarios.classes.GraphList import GraphList
+
 
 class Node:
     def __init__(self, data:'str') -> None:
