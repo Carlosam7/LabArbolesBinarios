@@ -1,4 +1,4 @@
-from typing import List, Any, Optional
+from typing import List, Any
 import os
 from PIL import Image
 
@@ -55,13 +55,13 @@ class GraphList:
                     return path
         return None
     
-    def plot(self, list_level: List['str']) -> 'gv.Digraph':
+    def plot(self, list_level: List['str'], color) -> 'gv.Digraph':
         g = gv.Digraph(format='png')
         for i in range(self.__n):
-            g.node(str(i), str(list_level[i]), shape='circle', style='filled', fillcolor='#156082', color='#156082', fontcolor='white', fontsize='20', width='0.7', height='0.7', fontname='Comic Sans MS')
+            g.node(str(i), str(list_level[i]), shape='circle', style='filled', fillcolor=color, color=color, fontcolor='white', fontsize='20', width='0.7', height='0.7', fontname='Comic Sans MS')
         for i in range(len(list_level)):
             for j in self.__list_ady[i]:
-                g.edge(str(i), str(list_level.index(j)), color='#156082', penwidth='1.0', width='0.5', height='0.5', style='solid', arrowhead='vee', arrowsize='0.5')
+                g.edge(str(i), str(list_level.index(j)), color=color, penwidth='1.0', width='0.5', height='0.5', style='solid', arrowhead='vee', arrowsize='0.5')
         return g
 
 

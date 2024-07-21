@@ -13,8 +13,6 @@ def index() -> rx.Component:
             ),
             class_name='flex flex-col w-full items-center justify-center min-w-[300px] bg-white'
         )
-
-
 app = rx.App(
     style = styles.BASE_STYLE,
     stylesheets=[
@@ -22,5 +20,3 @@ app = rx.App(
     ]
 )
 app.add_page(index)
-# app.add_page(tools, route="/tools")
-# app.add_page(team, route="/team")

@@ -9,7 +9,8 @@ class Avl:
         self.__root = root
         self.__list_ady: Optional['GraphList'] = [[]]
         
-        self.set_list_ady()
+        if self.__root is not None:
+            self.set_list_ady()
     
     def get_root(self) -> 'Node':
         return self.__root
@@ -45,7 +46,7 @@ class Avl:
         root = self.get_root()
         to_insert = Node(data)
         if root == None:
-            root = to_insert
+            self.set_root(to_insert)
             self.set_list_ady()
             return True
         else:
@@ -73,10 +74,13 @@ class Avl:
         p, pad = self.search(data)
         if p is not None:
             if p.get_left() is None and p.get_right() is None:
-                if p == pad.get_left():
-                    pad.set_left(None)
+                if pad != None:
+                    if p == pad.get_left():
+                        pad.set_left(None)
+                    elif p == pad.get_right():
+                        pad.set_right(None)
                 else:
-                    pad.set_right(None)
+                    return False
 
             elif p.get_left() is not None and p.get_right() is None:
                 if pad != None:
@@ -84,12 +88,17 @@ class Avl:
                         pad.set_left(p.get_left())
                     else:
                         pad.set_right(p.get_left())
+                else:
+                    self.set_root(p.get_left())
             
             elif p.get_left() == None and p.get_right() != None:
-                if p == pad.get_left():
-                    pad.set_left(p.get_right())
+                if pad != None:
+                    if p == pad.get_left():
+                        pad.set_left(p.get_right())
+                    else:
+                        pad.set_right(p.get_right())
                 else:
-                    pad.set_right(p.get_right())
+                    self.set_root(p.get_right())
             else:
                 pred, pad_pred = self.pred(p)
                 p.set_data(pred.get_data())

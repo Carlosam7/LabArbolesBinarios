@@ -39,7 +39,7 @@ def categorias() -> rx.Component:
                                     rx.box(
                                         class_name='flex items-center justify-center w-full h-full bg-[#FF5205] opacity-70 rounded-md'
                                     ),
-                                    background= "top/cover url('Data/cat.54.jpg')",
+                                    background= "top/cover url('Data/cat.54.png')",
                                     class_name='flex items-center justify-center w-full h-[60%] rounded-md shadow-lg'
                                 ),
                                 rx.box(
